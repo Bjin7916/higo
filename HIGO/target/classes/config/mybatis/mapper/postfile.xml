@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="postfile"><!-- SQL 문들을 파일마다 구분할수 있는 이름.... -->
+
+	<select id="selectList" resultType="postfile" parameterType="int">
+		select * from postFile where post_seq=#{post_seq}
+	</select>
+	
+	<insert id="insert" parameterType="postfile">
+		insert into postFile values(postFile_seq.nextval,#{post_seq},#{fileType_seq},#{fileName})
+	</insert>
+	
+</mapper>

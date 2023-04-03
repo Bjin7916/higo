@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="request">
+
+	  <!--대카테고리 이름검색-->
+    <select id="majorSvcSelect" resultType="map">
+        select * from majorSvc order by majorsvc_seq asc
+    </select>
+		<!-- 중카테고리 이름검색 -->
+	<select id="middleSvcSelect" parameterType="request" resultType="map">
+		select middleSvc_name, middleSvc_seq from middleSvc where majorSvc_seq = #{majorSvc_seq}
+	</select>
+	<!-- 소카테고리 모든 vo -->
+	<select id="subSvcSelect" parameterType="request" resultType="map">
+		select * from subSvc where majorSvc_seq = #{majorSvc_seq}
+	</select>
+	<!-- 소카테고리 시퀀스가 같은 질문테이블 모든요소 검색 -->
+	<select id="questionSelect" parameterType="int" resultType="map">
+		select * from question where subSvc_seq = #{subSvc_seq} order by question_step asc
+	</select>
+	<!-- 질문테이블 모든요소 검색 -->
+	<select id="answerSelect" parameterType="request" resultType="map">
+		select * from answer
+	</select>
+	<!-- 소 카테고리 시퀀스가 입력받은 값과 같은 소vo 모든요소 검색 -->
+	<select id="subSvcSelectVO" parameterType="request" resultType="com.higo.subSvc.SubSvcVO">
+		select * from subSvc where subSvc_seq=#{subSvc_seq}
+	</select>
+	
+	<insert id="quoteReqVOInsert" parameterType="request">
+		insert into quoteReq(quotereq_Seq, subsvc_seq, middlesvc_seq, majorsvc_Seq, member_Seq, req_text, qStatus) values(quoteReq_seq.nextval, #{subSvc_seq}, #{middleSvc_seq}, #{majorSvc_seq}, #{member_seq}, #{req_text}, #{qStatus})
+	</insert>
+	
+	<!-- parkyounsoo 견적서요청서에서 mlogin세션과 같은 member_seq 가져와서 보여준다. -->
+	<select id="selectQuote" parameterType="request" resultType="map">
+		select * from quoteReq where member_seq=#{member_seq}
+	</select>
+	<select id="receiveQuoteRequest" parameterType="request" resultType="map">
+		select * from quoteReq where subsvc_seq=#{gosuMainSubSvc_seq}
+	</select>
+	<delete id="delectQuoteRequest" parameterType="request">
+		delete quotereq where quotereq_seq=#{quotereq_seq}
+	</delete>
+	<select id="showQuoteRequest" parameterType="request" resultType="com.higo.quoteReq.QuoteReqVO">
+		select * from quotereq where quotereq_seq=#{quotereq_seq}
+	</select>
+	<!-- quotereq subsvc_seq -->
+	<select id="selectSubSeq" parameterType="request" resultType="int">
+		select subsvc_seq from quotereq where quotereq_seq=#{quotereq_seq}
+	</select>
+	<!-- 견적 요청서 status 값 변경 -->
+	<update id="statusUpdate" parameterType="request">
+		update quotereq set qStatus=1 where quotereq_seq=#{quoteReq_seq}
+	</update>
+	
+	<select id="majorSvcVO" parameterType="int" resultType ="String">
+		select majorSvc_name from majorSvc where majorSvc_seq = #{majorSvc_seq}
+	</select>
+	
+	<select id="middleSvcVO" parameterType="int" resultType="map">
+		select * from majorSvc where majorSvc_seq
+	</select>
+	<select id="subSvcAll" parameterType="request" resultType="map">
+		select * from subsvc
+	</select>
+	<select id="svcName" parameterType="int" resultType="String">
+		select distinct s.subsvc_name 
+			from (select subSvc_seq from quoteReq q, gosu g where q.subSvc_seq = g.gosums_seq)a, subsvc s 
+				where a.subsvc_seq = #{gosuMS_seq} and s.subsvc_seq= #{gosuMS_seq}
+	</select>
+	
+</mapper>
+	

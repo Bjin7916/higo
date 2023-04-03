@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	
+	<!-- 광민 -->
+
+	<insert id="insert" parameterType="member">
+		insert into mem values(member_seq.nextval,#{id},#{password},#{tel},#{email},#{name},#{member_img},0,#{agree_ad})
+	</insert>
+	
+	<select id="checkLogin" resultType="int" parameterType="member">
+		select member_seq from mem where id=#{id} and password=#{password} 
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="member">
+		select * from mem where member_seq=#{member_seq}
+	</select>
+
+	<select id="getId" parameterType="int" resultType="String">
+		select id from mem where member_seq=#{member_seq}
+	</select>
+
+	<select id="getName" parameterType="int" resultType="String">
+		select name from mem where member_seq=#{member_seq}
+	</select>
+	
+	<select id="findId" parameterType="member" resultType="String">
+		select id from mem where email=#{email}
+	</select>
+	
+	<select id="findPw" parameterType="member" resultType="String">
+		select password from mem where id=#{id} and email=#{email} and tel=#{tel}
+	</select>
+	
+	<update id="update" parameterType="member">
+		update mem set email=#{email},tel1=#{tel1},tel2=#{tel2},tel3=#{tel3} where member_seq=#{member_seq}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete mem where member_seq=#{member_seq}
+	</delete>
+	
+	<select id="checkId" parameterType="String" resultType="String">
+		select id from mem where id=#{id}
+	</select>
+	
+	<select id="getMember_div" resultType="int">
+		select member_div from mem where member_seq=#{member_seq}
+	</select>
+	
+	<select id="getSeq" resultType="int">
+		select member_seq.nextval from dual
+	</select>
+	
+	<update id="updatediv" parameterType="int">
+		update mem set member_div = 1 where  member_seq = #{member_seq}
+	</update>
+	
+	<!-- 범진 -->
+	<select id="countReview" parameterType="int" resultType="int">
+		select count(*) from review where gosu_seq=#{gosu_seq}
+	</select>
+	
+	<select id="reviewStar" parameterType="int" resultType="int">
+		select star_score from review where gosu_seq=#{gosu_seq}
+	</select>
+
+	<select id="checkEmail" parameterType="String" resultType="String">
+		select email from mem where email=#{email}
+	</select>
+
+	<select id="checkTel" parameterType="String" resultType="String">
+		select tel from mem where tel=#{tel}
+	</select>
+	
+	<!-- 대표서비스 -->
+	<select id="majorSvc" parameterType="String" resultType="String">
+		select majorsvc_name from majorSvc
+	</select>
+	<select id="selectMemName" parameterType="member" resultType="String">
+		select name from mem where member_seq=#{member_seq}
+	</select>
+	
+	
+	<!-- 선경 -->
+	<update id="updateDiv" parameterType="int">
+		update mem set member_div = 1 where (select member_div from mem m, gosu g where m.member_seq = #{member_seq} and g.member_seq = #{member_seq})
+	</update>
+	
+	<select id="reqMember" parameterType="int" resultType="member">
+		select m.name, m.id 
+			from (select e.* from mem e, quoteReq q where q.member_seq = e.member_seq and q.quoteReq_seq =#{quotereq_seq})m  
+	</select>
+	
+	
+</mapper>

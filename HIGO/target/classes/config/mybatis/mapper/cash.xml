@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cash">
+
+	<!-- 한 회차 충전 -->
+	<insert id="charge" parameterType="cash">
+		insert into cash values(cash_seq.nextval, #{gosu_seq},#{charge_cash},#{bonus_cash},sysdate)
+	</insert>
+	<!-- 사용자가 고른 충전금액 --> 
+	<select id="getCash" parameterType="int" resultType="int">
+		select charge_cash from cashKind where cashKind_seq=#{cashKind_seq}
+	</select>
+	<!-- 고수 충전내역 -->
+	<select id="chargeList" resultType="map">
+		select * from cash where gosu_seq=#{gosu_seq} order by cash_seq desc
+	</select>
+	
+	<update id="setCash" parameterType="cash">
+		update gosu set cash=#{cash},bonus_cash=#{bonus_cash} where gosu_seq=#{gosu_seq}
+	</update>
+	
+	
+</mapper>
