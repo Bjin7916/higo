@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gosu">
+
+	<insert id="insert" parameterType="gosu">
+		insert into gosu values(gosu_seq.nextval,#{member_seq},#{intro},#{svc_range},#{actAddr},#{account},#{staff_ctn},#{career},#{contact_time},#{portfolio},0,0,#{auto_check},#{kakao_id},#{gosuMS_seq},#{hire_cnt},#{star_avg})	
+	</insert>
+	
+	<update id="update" parameterType="gosu">
+		update gosu set intro=#{intro},svc_range=#{svc_range},active_address=#{active_address},account=#{account},staff_ctn=#{staff_ctn},career=#{career},contact_time=#{contact_time},portfolio=#{portfolio},kakao_id=#{kakao_id} where 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete gosu where gosu_seq=#{gosu_seq}
+	</delete>
+	
+	<select id="getSeq" resultType="int">
+		select gosu_seq.nextval from dual
+	</select>
+	
+	<select id="checkLogin" resultType="int" parameterType="gosu">
+		select gosu_seq from gosu where member_seq=#{member_seq}
+	</select>
+	
+	<select id="selectOneGosu" parameterType="int" resultType="gosu">
+		select * from gosu where gosu_seq=#{gosu_seq}
+	</select>
+	
+	<select id="myCash" resultType="gosu">
+		select cash, bonus_cash	from gosu where gosu_seq = #{gosu_seq}
+	</select>
+	<!-- 멤버시퀀스로 고수정보가져오기 -->
+	<select id="selectOne" resultType="gosu">
+		select * from gosu g, mem m where g.member_seq = #{member_seq} and m.member_seq = #{member_seq}
+	</select>
+	<select id="selectGosuMS" parameterType="gosu" resultType="com.higo.gosuMainSvc.GosuMainSvcVO">
+		select * from gosumainsvc where gosuMS_seq=#{gosuMS_seq}
+	</select>
+	
+	<!-- 고수 메인 시퀀스로 소 중 대 뽑아오기 -->
+	<select id="selectSMM" parameterType="gosu" resultType="com.higo.gosuMainSvc.GosuMainSvcVO">
+		select * from gosumainsvc where gosums_seq = (select gosums_seq from gosu where gosu_seq=#{gosu_seq})
+	</select>
+	
+	<!--  광민 -->
+	<select id="checkId" parameterType="String" resultType ="String">
+		select m.id from mem m, gosu g where m.id=#{id} 
+	</select>
+	
+	<select id="checkEmail" parameterType="String" resultType ="String">
+		select m.email from mem m, gosu g where m.email=#{email} 
+	</select>
+	
+	<select id="checkTel" parameterType="String" resultType ="String">
+		select m.tel from mem m, gosu g where m.tel=#{tel} 
+	</select>
+	
+	<!-- 선경 -->
+	<!-- 견적서 보낸 고수의 id 가져오기 -->
+	<select id="gosuId" parameterType="int" resultType="String">
+		select m.id from 
+			(select g.member_seq from 
+				(select * from quote where quoteReq_seq = #{quoteReq_seq})a, gosu g 
+					where g.gosu_seq = a.gosu_seq)b,mem m where m.member_seq = b.member_seq
+	</select>
+	
+	<!-- 범진's CODE -->
+   <update id="svcRange" parameterType="gosu">
+      update gosu set svc_range=#{ svc_range },actAddr=#{actAddr} where gosu_seq=#{gosu_seq}
+   </update>
+	
+	<select id="returnRange" parameterType="int">
+		select svc_range from gosu where gosu_seq=#{gosu_seq}
+	</select>
+	
+	<update id="reActaddr" parameterType="gosu">
+		update gosu set actAddr=#{actAddr} where gosu_seq=#{gosu_seq}
+	</update>
+	
+	<select id="returnActaddr" parameterType="String">
+		select actAddr from gosu where gosu_seq=#{gosu_seq}
+	</select>
+	
+	<select id="countReview" parameterType="int" resultType="int">
+		select count(*) from review where gosu_seq=#{gosu_seq}
+	</select>
+	
+	<select id="reviewStar" parameterType="int" resultType="int">
+		select star_score from review where gosu_seq=#{gosu_seq}
+	</select>
+	
+	<select id="selectQuote">
+	</select>
+	
+	<!-- 대표서비스 -->
+	<select id="majorSvc" parameterType="String" resultType="String">
+		select majorsvc_name from majorSvc
+	</select>
+	
+	<update id="starAvg" parameterType="int">
+		update gosu set star_avg where gosu_seq=#{gosu_seq}
+	</update>
+	
+	<update id="reName" parameterType="gosu">
+		update mem set name=#{name} where member_seq=#{member_seq}
+	</update>
+	
+	<select id="returnName" resultType="String">
+		select name from mem where member_seq=#{member_seq}
+	</select>
+	
+	<update id="reIntro" parameterType="gosu" >
+		update gosu set intro=#{intro} where gosu_seq=#{gosu_seq}
+	</update>
+	
+	<select id="returnIntro" resultType="String">
+		select intro from gosu where gosu_seq=#{gosu_seq}
+	</select>
+	<!-- 고수 고용수 하나 증가 -->
+	<update id="updateHireCnt" parameterType="gosu">
+		update gosu set hire_cnt = hire_cnt + 1 where gosu_seq=#{gosu_seq}
+	</update>
+	<!-- 고수 캐시 가져오기 -->
+	<select id="selectchargeCash" parameterType="gosu" resultType="gosu">
+		select * from gosu where gosu_seq=#{gosu_seq}
+	</select>
+	<!-- 모든 고수정보 list map으로 받아오기 -->
+	<select id="gosuAll" parameterType="gosu" resultType="map">
+		select * from gosu where gosums_seq=#{subSvc_seq}
+	</select>
+	<!-- major -->
+	<select id="major" parameterType="gosu" resultType="map">
+		select * from majorsvc
+	</select>
+	<select id="middle" parameterType="gosu" resultType="map">
+		select * from middlesvc where majorsvc_seq=#{majorSvc_seq}
+	</select>
+	<select id="sub" parameterType="gosu" resultType="map">
+		select * from subsvc where middlesvc_seq=#{middleSvc_seq}
+	</select>
+	
+	
+</mapper>

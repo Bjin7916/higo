@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<bean id="cashService" class="com.higo.cash.CashService">
+		<property name="cashDao" ref="cashDao"/>
+	</bean>
+	<bean id="localService" class="com.higo.local.LocalService">
+		<property name="localDao" ref="localDao"/>
+	</bean>
+	
+	
+	<!-- <bean id="communityService" class="com.higo.community.CommunityService">
+		<property name="communityDao" ref="communityDao"/>
+	</bean> -->
+	
+	<!-- 광민 -->
+	<bean id="memberService" class="com.higo.member.MemberService">
+		<property name="memberDao" ref="memberDao"/>
+	</bean>
+	<bean id="gosuService" class="com.higo.gosu.GosuService">
+		<property name="gosuDao" ref="gosuDao"/>
+		<property name="memberDao" ref="memberDao"/>
+	</bean>
+	
+	
+	<!-- 현아 -->
+	<bean id="postService" class="com.higo.post.PostService">
+		<property name="postDao" ref="postDao"/>
+		<property name="postFileDao" ref="postFileDao"/>
+		<property name="commentDao" ref="commentDao"/>
+	</bean>
+	<bean id="commentService" class="com.higo.c_ment.CommentService">
+		<property name="commentDao" ref="commentDao"/>
+		<property name="postDao" ref="postDao"/>
+	</bean>
+	<bean id="postLikeService" class="com.higo.postLike.PostLikeService">
+		<property name="postLikeDao" ref="postLikeDao"/>
+		<property name="postDao" ref="postDao"/>
+	</bean>
+	<bean id="commentLikeService" class="com.higo.commentlike.CommentLikeService">
+		<property name="commentLikeDao" ref="commentLikeDao"/>
+		<property name="commentDao" ref="commentDao"/>
+	</bean>
+	
+	
+	<!-- 윤수 -->
+		<bean id="middleSvcService" class="com.higo.middleSvc.MiddleSvcService">
+		<property name="middleSvcDao" ref="middleSvcDao"/>
+	</bean>
+	
+	<bean id="subSvcService" class="com.higo.subSvc.SubSvcService">
+		<property name="subSvcDao" ref="subSvcDao"/>
+	</bean>
+	<bean id="majorSvcService" class="com.higo.majorSvc.MajorSvcService">
+		<property name="majorSvcDao" ref="majorSvcDao"/>
+	</bean>
+	
+	<bean id="questionService" class="com.higo.question.QuestionService">
+		<property name="questionDao" ref="questionDao"/>
+	</bean>
+	
+	<bean id="answerService" class="com.higo.answer.AnswerService">
+		<property name="answerDao" ref="answerDao"/>
+	</bean>
+	
+	<bean id="quoteReqService" class="com.higo.quoteReq.QuoteReqService">
+		<property name="quoteReqDao" ref="quoteReqDao"/>
+	</bean>
+	
+	<bean id="gosuMainSvcService" class="com.higo.gosuMainSvc.GosuMainSvcService">
+		<property name="gosuMainSvcDao" ref="gosuMainSvcDao"/>
+	</bean>
+	
+	<bean id="quoteService" class="com.higo.quote.QuoteService">
+		<property name="quoteDao" ref="quoteDao"/>
+	</bean>
+	<bean id="myQuoteAddService" class="com.higo.myQuoteadd.MyQuoteAddService">
+		<property name="myQuoteAddDao" ref="myQuoteAddDao"></property>
+	</bean>
+	
+	
+	<!-- 범진 -->
+	
+</beans>

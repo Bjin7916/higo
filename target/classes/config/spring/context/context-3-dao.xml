@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	
+	
+	<bean id="gosuDao" class="com.higo.gosu.GosuDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean> 
+	<bean id="cashDao" class="com.higo.cash.CashDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="localDao" class="com.higo.local.LocalDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	
+	<bean id="communityDao" class="com.higo.community.CommunityDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	
+	<!-- 광민 -->
+	<bean id="memberDao" class="com.higo.member.MemberDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	
+	<!-- 현아 -->
+	<bean id="postDao" class="com.higo.post.PostDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean> 
+	<bean id="commentDao" class="com.higo.c_ment.CommentDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean> 
+	<bean id="postFileDao" class="com.higo.postFile.PostFileDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="postLikeDao" class="com.higo.postLike.PostLikeDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="commentLikeDao" class="com.higo.commentlike.CommentLikeDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>  
+	
+	<!-- 윤수 -->
+	<bean id="majorSvcDao" class="com.higo.majorSvc.MajorSvcDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="middleSvcDao" class="com.higo.middleSvc.MiddleSvcDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	
+	<bean id="subSvcDao" class="com.higo.subSvc.SubSvcDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="questionDao" class="com.higo.question.QuestionDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="answerDao" class="com.higo.answer.AnswerDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="quoteReqDao" class="com.higo.quoteReq.QuoteReqDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="gosuMainSvcDao" class="com.higo.gosuMainSvc.GosuMainSvcDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="quoteDao" class="com.higo.quote.QuoteDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean id="myQuoteAddDao" class="com.higo.myQuoteadd.MyQuoteAddDAO">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+	
+	<!-- 범진 -->
+</beans>

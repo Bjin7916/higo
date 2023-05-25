@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post"><!-- SQL 문들을 파일마다 구분할수 있는 이름.... -->
+<select id="selectList" resultType="post" parameterType="map">
+		select * from (select rownum rn,t.* from (select p.*,m.id from post p,mem m where p.member_seq = m.member_seq
+					<if test="type != null">
+						<choose>
+							<when test="type == 'post_seq'">
+								and post_seq=#{word}
+							</when>
+							<otherwise>
+								and ${type} like '%${word}%'
+							</otherwise>
+						</choose>
+					</if> 
+						<!--  #{} - 데이터로 취급 ${} - 글자 자체로 처리... -->
+				order by post_seq desc) t) 
+		<![CDATA[
+			where rn >=#{first} and rn <= #{last}
+		]]>
+	</select>
+	
+	<select id="selectOne" resultType="post">
+		select p.*,m.id from post p,mem m where p.member_seq = m.member_seq and post_seq = #{post_seq}
+	</select>
+	
+	<select id="getTotal" resultType="int" parameterType="map">
+		select count(*) from post p, mem m where p.member_seq = m.member_seq 
+			<if test="type != null">
+				<if test="type == 'post_seq'">
+					and post_seq = #{word}
+				</if>
+				<if test="type != 'post_seq'">
+					and #{type} like '%${word}%'
+				</if> 
+			</if>			
+	</select>
+	
+	<select id="getSeq" resultType="int">
+		select post_seq.nextval from dual
+	</select>
+	
+	<insert id="insert" parameterType="post">
+		insert into post values(#{post_seq},#{member_seq},#{comuPart_seq},#{subSvc_seq},#{middleSvc_seq},#{majorSvc_seq},#{local_seq},
+		#{post_title},SYSDATE,0,0,#{post_content,jdbcType=CLOB})
+	</insert>
+	
+	<update id="update" parameterType="post">
+		update post set post_title=#{post_title},post_content=#{post_content} where post_seq=#{post_seq}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete post where post_seq=#{post_seq}
+	</delete>
+	
+	<!-- 마이페이지 : 사용자가 작성한 글-->
+	<select id="mPList" resultType="map" parameterType="int">
+		select * from (select rownum rn,t.* from (select p.* from post p,mem m where p.member_seq = m.member_seq order by post_seq desc) t) where member_seq = #{member_seq}
+	</select>
+	<!-- 조회수 -->
+	<update id="hitCnt" parameterType="post">
+		update post set post_hit = #{post_hit} where post_seq = #{post_seq}
+	</update>
+	<select id="allPost" resultType="post">
+		select post_seq from post
+	</select>
+		
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

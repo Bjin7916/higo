@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
+	 <typeAliases>
+		<typeAlias type="common.Paging" alias="paging"/>
+		<typeAlias type="com.higo.member.MemberVO" alias="member"/>
+		<typeAlias type="com.higo.gosu.GosuVO" alias="gosu"/>
+		<typeAlias type="com.higo.cash.CashVO" alias="cash"/>
+		<typeAlias type="com.higo.middleSvc.MiddleSvcVO" alias="request"/>
+		<typeAlias type="com.higo.community.CommunityVO" alias="community"/>
+		<typeAlias type="com.higo.post.PostVO" alias="post"/>
+		<typeAlias type="com.higo.c_ment.CommentVO" alias="comment"/>
+		<typeAlias type="com.higo.postFile.PostFileVO" alias="postfile"/>
+		<typeAlias type="com.higo.postLike.PostLikeVO" alias="postlike"/>
+		<typeAlias type="com.higo.commentlike.CommentLikeVO" alias="commentlike"/>
+		<typeAlias type="com.higo.local.LocalVO" alias="local"/>
+		<typeAlias type="com.higo.post.PostVO" alias="post"/>
+		<typeAlias type="com.higo.quote.QuoteVO" alias="quote"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="config/mybatis/mapper/member.xml"/>
+		<mapper resource="config/mybatis/mapper/gosu.xml"/>
+		<mapper resource="config/mybatis/mapper/cash.xml"/>
+		<mapper resource="config/mybatis/mapper/request.xml"/>
+		<mapper resource="config/mybatis/mapper/community.xml"/>
+		<mapper resource="config/mybatis/mapper/post.xml"/>
+		<mapper resource="config/mybatis/mapper/local.xml"/>
+		<mapper resource="config/mybatis/mapper/comment.xml"/>
+		<mapper resource="config/mybatis/mapper/postfile.xml"/>
+		<mapper resource="config/mybatis/mapper/like.xml"/>
+		<mapper resource="config/mybatis/mapper/post.xml"/>
+		<mapper resource="config/mybatis/mapper/quote.xml"/>
+	</mappers>
+</configuration>

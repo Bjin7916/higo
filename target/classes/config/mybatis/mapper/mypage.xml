@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage"><!-- SQL 문들을 파일마다 구분할수 있는 이름.... -->
+	
+	<select id="mPList" resultType="map" parameterType="int">
+	select * from 
+			(select rownum rn,t.* from 
+				(select p.*
+					from post p,mem m 
+					where p.member_seq = m.member_seq
+					order by post_seq desc) 
+			t) where member_seq = #{member_seq};
+	</select>
+</mapper>

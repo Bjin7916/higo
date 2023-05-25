@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quote">
+
+	
+	<select id="middleSvcSelect" parameterType="quote" resultType="map">
+		select middleSvc_name, middleSvc_seq from middleSvc where majorSvc_seq = #{majorSvc_seq}
+	</select>
+	
+	<select id="subSvcSelect" parameterType="quote" resultType="map">
+		select * from subSvc where majorSvc_seq = #{majorSvc_seq}
+	</select>
+	
+	<insert id="optionQuote" parameterType="quote">
+		insert into quote(quote_seq, gosu_seq, member_seq, price, price_type, quote_detail, quotefile_seq, quotereq_seq, send_date, options, qstatus)
+			values(quote_seq.nextval, #{gosu_seq}, #{member_seq}, #{price}, #{price_type}, #{quote_detail}, null, #{quoteReq_seq}, sysdate, #{options}, #{qStatus})
+	</insert>
+	
+	<select id="selectQuote" parameterType="quote" resultType="map">
+		select * from quote where member_seq=#{member_seq}
+	</select>
+	
+	<!-- subsvc테이블에서 subsvc_name 가져온다. -->
+	<select id="selectSubName" parameterType="quote" resultType="String">
+		select subsvc_name from subsvc where subsvc_seq=#{subsvc_seq}
+	</select>
+	
+	<!-- 자주쓰는 견적서 추가 -->
+	<insert id="insertMyQuoteAdd" parameterType="quote">
+		insert into myquoteadd (myquote_seq, gosu_seq, price, quote_detail, subsvc_seq, middlesvc_seq, majorsvc_seq, myquote_name) 
+			values (myquote_seq.nextval, #{gosu_seq}, #{price}, #{quote_detail}, #{subSvc_seq}, #{middleSvc_seq}, #{majorSvc_seq}, #{myQuote_name})
+	</insert>
+	<!-- 견적서 삭제 -->
+	<delete id="quoteDelete" parameterType="quote">
+		delete quote where quote_seq=#{quote_seq}
+	</delete>
+	<!-- 견적서에 status 값 1로 변경 -->
+	<update id="updateQuote" parameterType="quote">
+		update quote set qstatus=1 where quote_seq=#{quote_seq}
+	</update>
+	
+	<!-- 자주쓰는견적서 리스트 가져오기 -->
+	<select id="selectAddQuote" parameterType="quote" resultType="map">
+		select * from myquoteadd 
+	</select>
+	<select id="selectAddQuoteSeq" parameterType="quote" resultType="com.higo.myQuoteadd.MyQuoteAddVO">
+		select * from myquoteadd where myquote_seq=#{myQuote_seq}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

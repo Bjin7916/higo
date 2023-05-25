@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment"><!-- SQL 문들을 파일마다 구분할수 있는 이름.... -->
+	<insert id="writeComment" parameterType="comment">
+		insert into c_ment values (#{post_seq},#{comm_seq},#{member_seq},sysdate,'',
+		#{comm_groupNum},#{comm_step},#{comm_depth},#{comm_content},#{commLike_count})
+	</insert>
+	
+	<select id="commentList" resultType="comment" parameterType="int">
+		select * from c_ment where post_seq=#{post_seq} order by comm_groupNum desc,comm_step asc
+	</select>
+
+	<select id="selectOne" resultType="comment">
+		select c.*,p.post_seq from c_ment c,post p where c.post_seq = p.post_seq and comm_seq=#{comm_seq}
+	</select>
+	
+<!-- 	<update id="update" parameterType="comment">
+		update c_ment set comm_content=#{comm_content} where comm_seq=#{comm_seq}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete comm_seq where post_seq=#{post_seq}
+	</delete> -->
+
+	<update id="updateStep" parameterType="comment">
+		update c_ment set comm_step=comm_step+1 where comm_groupNum=#{comm_groupNum} and comm_step >= #{comm_step}
+	</update>
+	
+	<select id="getSeq" resultType="int">
+		select post_seq.nextval from dual
+	</select>
+	
+	<update id="setGroupNum" parameterType="comment">
+		update c_ment set comm_groupNum=#{comm_groupNum} where post_seq=#{post_seq} 
+	</update>
+	
+</mapper>

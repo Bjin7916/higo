@@ -1,0 +1,122 @@
+
+body{font-family:'Lora', serif;}
+form{border:3px solid #f1f1f1;}
+:root {
+    --main-color: #74bb60;
+    --accent-color: #91c17dd4;
+    --light-main-color: #9bd1e7;
+    --text-bright-color: #fff;
+    --text-color: rgb(106, 106, 106);
+    --large-width: 1000px;
+  }
+/*Modal*/
+
+.modal{
+    font-family: 'Hahmlet', serif;
+    width:100%;
+    height: 100%;
+    position: fixed;
+    left:0;
+    top:0;
+    z-index: 1;
+    background-color: rgb(0,0,0,0.4);
+    overflow: auto;
+    padding-top: 0px;
+    /*처음에는 안보이게 하기*/
+    display: none;
+}
+.modal-content{
+    background-color: #fefefe;
+    max-width: 600px;
+    width: 80%;
+    margin: 15% auto;
+    border: 1px solid #888;
+}
+.imgcontainer{
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position:relative;
+}
+
+img.picnicImg{
+    width:80%;
+    border-radius: 5%;
+}
+
+.close{
+    font-size: 35px;
+    font-weight: bold;
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+}
+/* form */
+.container{
+    padding: 16px;
+}
+
+input[name=uname], input[type=password]{
+    width: 40%;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    display: inline-block;
+    box-sizing: border-box; /*호엥??*/
+    align-items: flex-end;
+}
+
+.login, .canclebtn{
+    width: 20%;  /* 좌우폭 100% 사용 하기 */
+    background-color: var(--main-color);
+    color: white;   /* 흰색 글꼴 */
+    padding: 10px 10px;  /* 내부 여백주어 큼지막하게 */
+    border: none;  /* 테두리 없애기 */
+    margin: 8px 0; /* 위 아래 바깥 여백 */
+    cursor: pointer;  
+    border-radius: 8%;
+}
+.none{
+    background-color: #888;
+    padding: 10px 7px;
+}
+
+.login:hover, .cancelbtn:hover {
+    opacity: 0.8;  /* 마우스 올라가면 살짝 투명하게 */
+  }
+   
+.cancelbtn {  
+    width: auto;
+    padding: 10px 18px; 
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+}
+   
+span.psw{
+    float: right;
+    padding-top: 14px;
+    cursor: pointer;
+    font-size: 14px;
+    
+}
+.sign{
+    padding-top: 14px;
+    cursor: pointer;
+    font-size: 14px;
+}
+@media screen and (max-width:380px){
+    .cancelbtn{ width:100%; }
+    span.psw {
+        display:block;
+        float: none;
+    }
+}
+.animate{
+    animation: animatezoom 0.6s;
+}
+/* @keyframes animatezoom {
+    from{transform: scale(0)}
+    to{transform: scale(1);}
+} */

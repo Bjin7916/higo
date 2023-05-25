@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="local">
+	<!-- local , metro 정보 가져오기 -->
+	<select id="localList" resultType="map" parameterType="int">
+		select m.metro_seq, m.metro_name, l.local_name, l.local_seq from local l, metro m where m.metro_seq = #{metro_seq} and l.metro_seq = #{metro_seq}
+	</select>
+	
+	<!-- metro명 불러오기 -->
+	<select id="metroList" resultType="map">
+		select * from metro 
+	</select>
+	
+	
+		<!-- 지역별 등록된 서비스들 가져오기 -->
+	<select id="localMainSvc" resultType="map" parameterType="map">
+		select s.subsvc_seq, s.subsvc_name, count(*) from (select gosums_seq from gosu where actaddr like '%${metro_name}%') g,gosumainsvc m,subsvc s where g.gosums_seq = m.gosums_seq and m.subsvc_seq = s.subsvc_seq group by s.subsvc_name, s.subsvc_seq order by count(*) desc
+	</select>
+	
+	
+</mapper>

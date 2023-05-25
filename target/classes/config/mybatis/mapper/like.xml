@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="like">
+	<insert id="createPostlike">
+		insert into postLike values(postlike_seq.nextval, #{post_seq}, #{member_seq})
+	</insert>
+
+	<select id="readPostlike" resultType="postlike">
+		select * from postLike where post_seq = #{post_seq} and member_seq = #{member_seq}
+	</select>
+	
+	<select id="checkPostlike" resultType="postlike">
+		select l.*,p.post_seq from postLike l,post p where l.post_seq = p.post_seq
+	</select>
+	
+	<delete id="deletePostlike">
+		delete from postLike where post_seq = #{post_seq} and member_seq = #{member_seq}
+	</delete>
+	
+	<insert id="createCommentlike">
+		insert into commentLike(comm_seq, member_seq) values(#{comm_seq}, #{member_seq})
+	</insert>
+
+	<select id="readCommentlike" resultType="commentlike">
+		select * from commentLike where comm_seq = #{comm_seq} and member_seq = #{member_seq}
+	</select>
+	
+	<delete id="deleteCommentlike">
+		delete from commentLike where comm_seq = #{comm_seq} and member_seq = #{member_seq}
+	</delete>
+	<select id="getPostseq" resultType="int">
+		select postLike_seq.nextval from dual
+	</select>
+	<select id="getCommentseq" resultType="int">
+		select commentLike_seq.nextval from dual
+	</select>	
+
+	<select id="likeCheck" resultType="int" parameterType="map">
+		select count(*) from postLike where post_seq=#{post_seq} and member_seq=#{member_seq}
+	</select>	
+</mapper>
